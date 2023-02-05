@@ -53,16 +53,15 @@ header {
 
 main {
     flex: 1;
-    width: 90%;
 }
 
 .calculator{
     background-color: var(--clr-white);
     color: var(--clr-orange);
     margin: 0 auto;
-    width: 80vw;
+    width: 95vw;
     max-width: 400px;
-    height: 75vw;
+    height: 80vw;
     max-height: 350px;
     box-shadow: 0 0 8px black;
     display: flex;
@@ -88,7 +87,7 @@ main {
 }
 
 .numbers{
-    flex: 4;
+    flex: 3;
     display: grid;
     grid-template-columns: repeat(3, calc(100%/3));
     grid-template-rows: repeat(4, calc(100%/4));
@@ -111,6 +110,8 @@ main {
 .operators{
     flex: 1;
     display: grid;
+    grid-template-columns: repeat(2, calc(100%/2));
+    grid-template-rows: repeat(4, calc(100%/4));
 }
 
 .operators >*{
@@ -120,6 +121,18 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.operatorEqual{
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.operators >*:hover,
+.numbers >*:hover{
+    transform: scale(1.05);
+    transition: all 0.05s ease;
+    cursor: pointer;
 }
 
 footer {
