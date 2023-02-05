@@ -4,6 +4,11 @@
         url('./../assets/fonts/unbounded-variablefont_wght-webfont.woff') format('woff');
 }
 
+:root{
+    --clr-orange: hsl(16, 100%, 40%);
+    --clr-white: hsl(0, 0%, 90%);
+}
+
 *,
 *::after,
 *::before {
@@ -17,17 +22,108 @@ html:focus-within {
     scroll-behavior: smooth;
 }
 
-html,
-body {
-    width: 100%;
-    min-height: 100vh;
-}
-
 a {
     text-decoration: none;
-    color: hsl(0, 0%, 30%);
+    color: hsl(0, 0%, 70%);
 }
 
 a:hover {
-    color: hsl(0, 0%, 60%);
+    text-decoration: underline;
+    color: var(--clr-white);
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--clr-orange);
+    color: var(--clr-white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+header {
+    font-size: 48px;
+    font-weight: 600;
+    margin: 5px 0 50px;
+    text-align: center;
+}
+
+main {
+    flex: 1;
+    width: 90%;
+}
+
+.calculator{
+    background-color: var(--clr-white);
+    color: var(--clr-orange);
+    margin: 0 auto;
+    width: 80vw;
+    max-width: 400px;
+    height: 75vw;
+    max-height: 350px;
+    box-shadow: 0 0 8px black;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.display{
+    box-shadow: 0 0 4px black;
+    height: 15vw;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding: 20px;
+}
+
+.buttons{
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+}
+
+.numbers{
+    flex: 4;
+    display: grid;
+    grid-template-columns: repeat(3, calc(100%/3));
+    grid-template-rows: repeat(4, calc(100%/4));
+}
+
+.numbers >*{
+    color: var(--clr-white);
+    background-color: var(--clr-orange);
+    box-shadow: 0 0 4px black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.number0{
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.operators{
+    flex: 1;
+    display: grid;
+}
+
+.operators >*{
+    box-shadow: 0 0 4px black;
+    color: var(--clr-white);
+    background-color: var(--clr-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer {
+    margin: 50px 0 5px;
+    bottom: 0px;
+    text-align: center;
 }

@@ -13,7 +13,6 @@ const operate = (a, operator, b) => {
             return calcMultiply(a, b);
         case '/':
             return calcDivide(a, b);
-
         default:
             return 'not a valid operator';
     };
