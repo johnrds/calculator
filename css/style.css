@@ -4,8 +4,9 @@
         url('./../assets/fonts/unbounded-variablefont_wght-webfont.woff') format('woff');
 }
 
-:root{
+:root {
     --clr-orange: hsl(16, 100%, 40%);
+    --clr-orangeHover: hsl(16, 100%, 45%);
     --clr-white: hsl(0, 0%, 90%);
 }
 
@@ -55,21 +56,21 @@ main {
     flex: 1;
 }
 
-.calculator{
+.calculator {
     background-color: var(--clr-white);
     color: var(--clr-orange);
     margin: 0 auto;
     width: 95vw;
     max-width: 400px;
-    height: 80vw;
-    max-height: 350px;
+    height: 95vw;
+    max-height: 400px;
     box-shadow: 0 0 8px black;
     display: flex;
     flex-direction: column;
     padding: 10px;
 }
 
-.display{
+.display {
     box-shadow: 0 0 4px black;
     height: 15vw;
     width: 100%;
@@ -79,21 +80,26 @@ main {
     padding: 20px;
 }
 
-.buttons{
-    display: flex;
+.buttons {
+    display: grid;
     justify-content: space-between;
     height: 100%;
     width: 100%;
+    grid-template-columns: repeat(4, calc(100%/4));
+    grid-template-rows: repeat(5, calc(100%/5));
 }
 
-.numbers{
-    flex: 3;
-    display: grid;
-    grid-template-columns: repeat(3, calc(100%/3));
-    grid-template-rows: repeat(4, calc(100%/4));
+.number0 {
+    grid-column-start: 1;
+    grid-column-end: 3;
 }
 
-.numbers >*{
+.buttons>* {
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     color: var(--clr-white);
     background-color: var(--clr-orange);
     box-shadow: 0 0 4px black;
@@ -102,35 +108,9 @@ main {
     justify-content: center;
 }
 
-.number0{
-    grid-column-start: 1;
-    grid-column-end: 3;
-}
-
-.operators{
-    flex: 1;
-    display: grid;
-    grid-template-columns: repeat(2, calc(100%/2));
-    grid-template-rows: repeat(4, calc(100%/4));
-}
-
-.operators >*{
-    box-shadow: 0 0 4px black;
-    color: var(--clr-white);
-    background-color: var(--clr-orange);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.operatorEqual{
-    grid-column-start: 1;
-    grid-column-end: 3;
-}
-
-.operators >*:hover,
-.numbers >*:hover{
-    transform: scale(1.05);
+.buttons>*:hover {
+    transform: scale(1.03);
+    background-color: var(--clr-orangeHover);
     transition: all 0.05s ease;
     cursor: pointer;
 }
