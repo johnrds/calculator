@@ -1,19 +1,20 @@
+@font-face {
+    font-family: 'Unbounded';
+    src: url('./../assets/fonts/unbounded-variablefont_wght-webfont.woff2') format('woff2'),
+        url('./../assets/fonts/unbounded-variablefont_wght-webfont.woff') format('woff');
+}
+
 *,
 *::after,
 *::before {
     margin: 0;
     box-sizing: border-box;
+    font: inherit;
+    font-family: 'Unbounded', Tahoma, sans-serif;
 }
 
 html:focus-within {
     scroll-behavior: smooth;
-}
-
-input,
-button,
-textarea,
-select {
-    font: inherit;
 }
 
 html,
