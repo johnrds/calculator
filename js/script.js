@@ -38,9 +38,9 @@ const charMatch = (char) => {
     if (char === '/' ||
         char === '*' ||
         char === '-' ||
-        char === '+' ) {
+        char === '+') {
 
-        if(!operatorSelectec && bSelect){
+        if (!operatorSelectec && bSelect) {
             calcDisplay.textContent = a = operate(Number(a), operator, Number(b));
             b = '';
         };
@@ -64,11 +64,11 @@ const charMatch = (char) => {
         return;
     };
 
-    if (char === 'Del'){
-        if(bSelect){
-            calcDisplay.textContent = b = calcDisplay.textContent.slice(0,-1);
-        } else{
-            calcDisplay.textContent = a = calcDisplay.textContent.slice(0,-1);
+    if (char === 'Del') {
+        if (bSelect) {
+            calcDisplay.textContent = b = calcDisplay.textContent.slice(0, -1);
+        } else {
+            calcDisplay.textContent = a = calcDisplay.textContent.slice(0, -1);
         };
         return
     };
@@ -77,7 +77,7 @@ const charMatch = (char) => {
         calcDisplay.textContent = '';
         a = '';
         b = '';
-        operator='';
+        operator = '';
         operatorSelectec = false;
         bSelect = false;
         return;
@@ -101,14 +101,14 @@ const charMatch = (char) => {
 
     if (operatorSelectec && bSelect) {
         calcDisplay.textContent = ''
-        b ='';
+        b = '';
         operatorSelectec = false;
-    } else if (operatorSelectec && !bSelect){
+    } else if (operatorSelectec && !bSelect) {
         calcDisplay.textContent = ''
         operatorSelectec = false;
-        a ='';
+        a = '';
         b = '';
-        operator='';
+        operator = '';
     };
 
     if (bSelect) {
@@ -116,7 +116,7 @@ const charMatch = (char) => {
     } else {
         a += char;
     };
-    
+
     return displayUpdate(char);
 };
 
@@ -130,19 +130,30 @@ const displayUpdate = (char) => {
 };
 
 const detectKey = (e) => {
-    if(e.key === 'Enter'){
+    if (e.key === "'" || e.key === ',' || e.key === 'Space') return;
+
+    if (e.key === 'Enter') {
         return charMatch('=')
     };
-    if(e.key === 'backspace' || e.target.innerText === '⇐'){
+    if (e.key === 'Backspace') {
         charMatch('Del')
     } else {
-        if(e.key.match(/\W|\d/gi)){
-            charMatch(e.key|| e.target.innerText)};
+        if (e.key.match(/\d|\W/gi)) {
+            charMatch(e.key)
         };
+    };
 
 };
 
+const buttonKey = (e) => {
+    if (e.target.innerText === '⇐') {
+        charMatch('Del')
+    } else {
+        charMatch(e.target.innerText);
+    };
+}
+
 const Btns = document.querySelectorAll('.btn');
-Btns.forEach(button => button.addEventListener('click', detectKey));
+Btns.forEach(button => button.addEventListener('click', buttonKey));
 
 window.addEventListener('keydown', detectKey);
