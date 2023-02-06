@@ -62,7 +62,7 @@ main {
     margin: 0 auto;
     width: 95vw;
     max-width: 350px;
-    height: 100vw;
+    height: 130vw;
     max-height: 450px;
     box-shadow: 0 0 8px black;
     display: flex;
@@ -75,7 +75,7 @@ main {
 .display {
     box-shadow: 0 0 4px black;
     border-radius: 5px;
-    height: 25vw;
+    height: 40vw;
     max-height: 90px;
     width: 100%;
     display: flex;
