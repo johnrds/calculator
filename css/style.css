@@ -62,8 +62,8 @@ main {
     margin: 0 auto;
     width: 95vw;
     max-width: 400px;
-    height: 95vw;
-    max-height: 400px;
+    height: 100vw;
+    max-height: 450px;
     box-shadow: 0 0 8px black;
     display: flex;
     flex-direction: column;
@@ -73,12 +73,16 @@ main {
 
 .display {
     box-shadow: 0 0 4px black;
-    height: 10vw;
+    height: 25vw;
+    max-height: 90px;
     width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: end;
-    padding: 20px;
+    flex-direction: column;
+    gap: 10px;
+    align-items: end;
+    justify-content: center;
+    padding: 15px;
+    font-size: 25px;
 }
 
 .buttons {

@@ -29,9 +29,10 @@ const charMatch = (char) => {
     if (char === '=' && operator === '') return
 
     if (char === '=') {
-        calcDisplay.textContent = a = operate(Number(a), operator, Number(b));
+        a = operate(Number(a), operator, Number(b));
         operatorSelectec = true;
         bSelect = false;
+        prevCalc.textContent = `${a} ${operator}`;
         return;
     };
 
@@ -46,9 +47,10 @@ const charMatch = (char) => {
         };
 
         if (operatorSelectec && !bSelect) {
-            b = '';
             operator = char;
             bSelect = true;
+            prevCalc.textContent = `${a} ${operator}`;
+            b = '';
             return;
         };
 
@@ -61,6 +63,8 @@ const charMatch = (char) => {
         };
 
         operator = char
+        prevCalc.textContent = `${a} ${operator}`;
+        b = a;
         return;
     };
 
@@ -78,6 +82,7 @@ const charMatch = (char) => {
         a = '';
         b = '';
         operator = '';
+        prevCalc.textContent = '';
         operatorSelectec = false;
         bSelect = false;
         return;
@@ -106,6 +111,7 @@ const charMatch = (char) => {
     } else if (operatorSelectec && !bSelect) {
         calcDisplay.textContent = ''
         operatorSelectec = false;
+        prevCalc.textContent='';
         a = '';
         b = '';
         operator = '';
@@ -120,7 +126,8 @@ const charMatch = (char) => {
     return displayUpdate(char);
 };
 
-const calcDisplay = document.querySelector('.display');
+const calcDisplay = document.querySelector('.newNumber');
+const prevCalc = document.querySelector('.prevNumbers');
 const displayUpdate = (char) => {
     if (calcDisplay.textContent.length >= 19) return
 
