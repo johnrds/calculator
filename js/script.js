@@ -50,7 +50,6 @@ const charMatch = (char) => {
             operator = char;
             bSelect = true;
             prevCalc.textContent = `${a} ${operator}`;
-            b = '';
             return;
         };
 
