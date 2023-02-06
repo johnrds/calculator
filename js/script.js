@@ -24,9 +24,7 @@ let a = '',
     operatorSelectec = false,
     bSelect = false;
 
-const charMatch = (e) => {
-    const char = e.target.innerText;
-
+const charMatch = (char) => {
     if (char === '=' && calcDisplay.textContent === '') return
     if (char === '=' && operator === '') return
 
@@ -40,7 +38,7 @@ const charMatch = (e) => {
     if (char === '/' ||
         char === '*' ||
         char === '-' ||
-        char === '+') {
+        char === '+' ) {
 
         if(!operatorSelectec && bSelect){
             calcDisplay.textContent = a = operate(Number(a), operator, Number(b));
@@ -49,6 +47,7 @@ const charMatch = (e) => {
 
         if (operatorSelectec && !bSelect) {
             b = '';
+            operator = char;
             bSelect = true;
             return;
         };
@@ -60,9 +59,18 @@ const charMatch = (e) => {
             operatorSelectec = true;
             bSelect = true
         };
-        
+
         operator = char
         return;
+    };
+
+    if (char === 'Del'){
+        if(bSelect){
+            calcDisplay.textContent = b = calcDisplay.textContent.slice(0,-1);
+        } else{
+            calcDisplay.textContent = a = calcDisplay.textContent.slice(0,-1);
+        };
+        return
     };
 
     if (char === 'AC') {
@@ -121,5 +129,20 @@ const displayUpdate = (char) => {
     calcDisplay.innerText += char;
 };
 
+const detectKey = (e) => {
+    if(e.key === 'Enter'){
+        return charMatch('=')
+    };
+    if(e.key === 'backspace' || e.target.innerText === '⇐'){
+        charMatch('Del')
+    } else {
+        if(e.key.match(/\W|\d/gi)){
+            charMatch(e.key|| e.target.innerText)};
+        };
+
+};
+
 const Btns = document.querySelectorAll('.btn');
-Btns.forEach(button => button.addEventListener('click', charMatch));
+Btns.forEach(button => button.addEventListener('click', detectKey));
+
+window.addEventListener('keydown', detectKey);
