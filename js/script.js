@@ -1,163 +1,133 @@
-const calcAdd = (a, b) => a + b;
-const calcSubtract = (a, b) => a - b;
-const calcMultiply = (a, b) => a * b;
-const calcDivide = (a, b) => a / b;
+let a = ''
+    , b = ''
+    , operator = ''
+    , operatorSelectec = false
+    , bSelect = false
+    , didOperate = false;
 
-const operate = (a, operator, b) => {
+const lowerDisplay = document.querySelector('.newNumber')
+    , upperDisplay = document.querySelector('.prevNumbers');
+
+function operate(a, operator, b) {
     switch (operator) {
         case '+':
-            return calcAdd(a, b);
+            return `${Math.round(((Number(a) + Number(b)) + Number.EPSILON) * (10 ** 5)) / (10 ** 5)}`
         case '-':
-            return calcSubtract(a, b);
+            return `${Math.round(((Number(a) - Number(b)) + Number.EPSILON) * (10 ** 5)) / (10 ** 5)}`
         case '*':
-            return calcMultiply(a, b);
+            return `${Math.round(((Number(a) * Number(b)) + Number.EPSILON) * (10 ** 5)) / (10 ** 5)}`
         case '/':
-            return calcDivide(a, b);
-        default:
-            return 0;
+            return `${Math.round(((Number(a) / Number(b)) + Number.EPSILON) * (10 ** 5)) / (10 ** 5)}`
     };
 };
 
-let a = '',
-    b = '',
-    operator = '',
-    operatorSelectec = false,
-    bSelect = false;
-
-const charMatch = (char) => {
-    if (char === '=' && calcDisplay.textContent === '') return
-    if (char === '=' && operator === '') return
-
-    if (char === '=') {
-        a = operate(Number(a), operator, Number(b));
-        operatorSelectec = true;
-        bSelect = false;
-        prevCalc.textContent = `${a} ${operator}`;
-        return;
-    };
-
-    if (char === '/' ||
-        char === '*' ||
-        char === '-' ||
-        char === '+') {
-
-        if (!operatorSelectec && bSelect) {
-            calcDisplay.textContent = a = operate(Number(a), operator, Number(b));
-            b = '';
-        };
-
-        if (operatorSelectec && !bSelect) {
-            operator = char;
-            bSelect = true;
-            prevCalc.textContent = `${a} ${operator}`;
-            return;
-        };
-
-        if (operatorSelectec) {
-            calcDisplay.textContent = a = operate(Number(a), operator, Number(b));
-            operatorSelectec = false;
-        } else {
-            operatorSelectec = true;
-            bSelect = true
-        };
-
-        operator = char
-        prevCalc.textContent = `${a} ${operator}`;
-        b = a;
-        return;
-    };
-
-    if (char === 'Del') {
-        if (bSelect) {
-            calcDisplay.textContent = b = calcDisplay.textContent.slice(0, -1);
-        } else {
-            calcDisplay.textContent = a = calcDisplay.textContent.slice(0, -1);
-        };
-        return
-    };
-
-    if (char === 'AC') {
-        calcDisplay.textContent = '';
-        a = '';
-        b = '';
-        operator = '';
-        prevCalc.textContent = '';
-        operatorSelectec = false;
-        bSelect = false;
-        return;
-    };
-
-    if (char === '%') {
-        if (bSelect) {
-            return b = calcDisplay.textContent = Number(calcDisplay.textContent) / 100;
-        } else {
-            return a = calcDisplay.textContent = Number(calcDisplay.textContent) / 100;
-        };
-    };
-
-    if (char === '+/-') {
-        if (bSelect) {
-            return b = calcDisplay.textContent = Number(calcDisplay.textContent) * -1;
-        } else {
-            return a = calcDisplay.textContent = Number(calcDisplay.textContent) * -1;
-        };
-    };
-
-    if (operatorSelectec && bSelect) {
-        calcDisplay.textContent = ''
-        b = '';
-        operatorSelectec = false;
-    } else if (operatorSelectec && !bSelect) {
-        calcDisplay.textContent = ''
-        operatorSelectec = false;
-        prevCalc.textContent='';
-        a = '';
-        b = '';
-        operator = '';
-    };
+function numberChar(number) {
+    if (didOperate) specialChar('AC');
+    if (a.length > 10 && !bSelect || b.length > 10 && bSelect) return
 
     if (bSelect) {
-        b += char;
+        if (b === 0 || b === '0') b = ''
+        lowerDisplay.textContent = b += number
     } else {
-        a += char;
+        if (a === 0 || a === '0') a = ''
+        lowerDisplay.textContent = a += number
     };
-
-    return displayUpdate(char);
 };
 
-const calcDisplay = document.querySelector('.newNumber');
-const prevCalc = document.querySelector('.prevNumbers');
-const displayUpdate = (char) => {
-    if (calcDisplay.textContent.length >= 19) return
+function operatorChar(char) {
+    if (a === '') return
+    if (b === '') {
+        bSelect = true;
+    } else if (!didOperate) {
+        a = operate(a, operator, b);
+        b = '';
+    } else { b = '' };
 
-    if (char === '.' && calcDisplay.textContent.length === 0) calcDisplay.innerText = 0;
+    operatorSelectec = true;
+    didOperate = false;
+    operator = char;
+    upperDisplay.textContent = `${a} ${operator}`;
+};
 
-    calcDisplay.innerText += char;
+function doOperation() {
+    if (a === '') return
+    if (!operatorSelectec) {
+        if (b != '') a = b
+        bSelect = true
+        didOperate = true;
+        upperDisplay.textContent = `${a} =`;
+        b = '';
+        return
+    };
+    if (b === '') b = a
+    upperDisplay.textContent = `${a} ${operator} ${b} = `;
+    lowerDisplay.textContent = a = operate(a, operator, b);
+    didOperate = true;
+};
+
+function specialChar(char) {
+    switch (char) {
+        case '⇐':
+        case 'Backspace':
+            if (bSelect && !didOperate) {
+                (lowerDisplay.textContent.length === 1)
+                    ? lowerDisplay.textContent = b = '0'
+                    : lowerDisplay.textContent = b = lowerDisplay.textContent.slice(0, -1)
+            } else if (!didOperate) {
+                (lowerDisplay.textContent.length === 1)
+                    ? lowerDisplay.textContent = a = '0'
+                    : lowerDisplay.textContent = a = lowerDisplay.textContent.slice(0, -1)
+            };
+            return
+        case 'AC':
+        case 'Delete':
+            lowerDisplay.textContent
+                = upperDisplay.textContent
+                = operator
+                = a
+                = b = '';
+            operatorSelectec
+                = bSelect
+                = didOperate = false;
+            return
+        case '.':
+            if (didOperate) {
+                if (a.includes('.')) return
+            };
+            if (a.length > 10 && !bSelect || b.length > 10 && bSelect) return
+            if (bSelect) {
+                if (b.includes('.')) return;
+                if (b === '') b = lowerDisplay.textContent = '0';
+                lowerDisplay.textContent = b += '.'
+            } else {
+                if (a.includes('.')) return;
+                if (a === '') a = lowerDisplay.textContent = '0';
+                lowerDisplay.textContent = a += '.'
+            };
+            didOperate = false;
+            return
+        case '%':
+            lowerDisplay.textContent = a = `${Math.round(((Number(lowerDisplay.textContent) / 100) + Number.EPSILON) * (10 ** 5)) / (10 ** 5)}`
+            return
+        case '+/-':
+            lowerDisplay.textContent = a = `${Math.round(((Number(lowerDisplay.textContent) * -1) + Number.EPSILON) * (10 ** 5)) / (10 ** 5)}`
+            return
+    };
 };
 
 const detectKey = (e) => {
-    if (e.key === "'" || e.key === ',' || e.key === 'Space') return;
-
-    if (e.key === 'Enter') {
-        return charMatch('=')
-    };
-    if (e.key === 'Backspace') {
-        charMatch('Del')
-    } else {
-        if (e.key.match(/\d|\W/gi)) {
-            charMatch(e.key)
-        };
-    };
-
+    if (e.key.match(/[0-9]/gi)) return numberChar(e.key);
+    if (e.key === 'Delete' || e.key === 'Backspace' || e.key === '.' || e.key === "%") return specialChar(e.key);
+    if (e.key.match(/\/|\*|-|\+/gi)) return operatorChar(e.key);
+    if (e.key === 'Enter' || e.key === '=') return doOperation();
 };
 
 const buttonKey = (e) => {
-    if (e.target.innerText === '⇐') {
-        charMatch('Del')
-    } else {
-        charMatch(e.target.innerText);
-    };
-}
+    if (e.target.textContent.match(/[0-9]/gi)) return numberChar(e.target.textContent);
+    if (e.target.textContent.match(/AC|\.|⇐|\+\/-|%/gi)) return specialChar(e.target.textContent);
+    if (e.target.textContent.match(/\/|\*|-|\+/gi)) return operatorChar(e.target.textContent);
+    if (e.target.textContent = '=') return doOperation();
+};
 
 const Btns = document.querySelectorAll('.btn');
 Btns.forEach(button => button.addEventListener('click', buttonKey));

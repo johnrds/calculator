@@ -93,6 +93,10 @@ main {
     height: 50%;
 }
 
+.prevNumbers{
+    font-size: 0.75rem;
+}
+
 .buttons {
     display: grid;
     justify-content: space-between;
