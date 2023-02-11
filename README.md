@@ -1,4 +1,9 @@
-# calculator
+# Web Calculator
+
+## About
 A web version of a calculator made with HTML, CSS and JavaScript
 
-This was made as a part of The Odin Project curriculum, if you want to know more about TOP, visit https://www.theodinproject.com/about.
+## Links
+[View on GitHub Pages](https://johnrds.github.io/calculator/)
+
+This was made as a part of The Odin Project curriculum, [Click here](https://www.theodinproject.com/about) to know more about TOP.
